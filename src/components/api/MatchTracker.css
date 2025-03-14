@@ -1,34 +1,60 @@
-.match-tracker-container {
+/* 🟢 Общие стили */
+body {
     background-color: #06080c;
+}
+
+/* Контейнер для всей страницы */
+.match-tracker-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     padding-top: 20px;
     width: 100%;
     box-sizing: border-box;
 }
 
-.match-tracker {
-    color: white;
-    padding: 20px;
-    font-family: 'Inter', sans-serif;
-    width: 100%;
-    max-width: 1836px;
-    box-sizing: border-box;
-}
-
-/* Заголовок и кнопка обновления */
+/* 🔥 Заголовок и кнопка обновления */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     width: 100%;
+    max-width: 1836px;
+    margin-bottom: 20px;
 }
 
-/* Кнопка обновления */
+/* 🔄 Контейнер для кнопки обновления и ошибки */
+.refresh-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    position: relative;
+}
+
+/* 🔴 Блок ошибки (СЛЕВА от кнопки) */
+.error-message {
+    display: flex;
+    align-items: center;
+    background-color: #121418;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 250px;
+}
+
+/* ❌ Иконка ошибки */
+.error-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* 🔄 Кнопка "Обновить" */
 .refresh-btn {
     display: flex;
     align-items: center;
@@ -43,7 +69,6 @@
     border-radius: 4px;
     font-weight: 600;
     font-size: 18px;
-    font-family: 'Inter', sans-serif;
 }
 
 .refresh-btn:hover {
@@ -55,12 +80,34 @@
     height: 24px;
 }
 
-/* Список матчей */
+/* 🏆 Список матчей */
+.match-tracker {
+    color: white;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    max-width: 1836px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
 .match-list {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* 📌 Карточка матча */
+.match-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .match-card {
@@ -70,30 +117,49 @@
     background-color: #0b0e12;
     padding: 15px 20px;
     border-radius: 10px;
-    margin-bottom: 10px;
     font-size: 18px;
     font-weight: normal;
-    border: 1px solid #333;
+    border: 2px solid #333;
     height: 87px;
     width: 1836px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
-/* Выровняли логотипы и названия команд */
+.match-card.expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* 🎯 Дополнительная информация теперь внутри основной рамки */
+.match-details {
+    background-color: #0b0e12;
+    padding: 15px 20px;
+    width: 1836px;
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
+    border-radius: 0 0 10px 10px;
+    margin-top: -2px;
+    margin-bottom: 10px;
+}
+
+/* ⚽ Выровняли логотипы и названия команд */
 .team {
     display: flex;
     align-items: center;
     width: 30%;
-    justify-content: flex-start; /* Выравнивание влево и вправо */
-    gap: 12px; /* Равномерный отступ между логотипом и названием */
+    justify-content: flex-start;
+    gap: 12px;
 }
 
 .team-left {
-    padding-left: 20px; /* Одинаковые отступы слева */
+    padding-left: 20px;
 }
 
 .team-right {
     justify-content: flex-end;
-    padding-right: 20px; /* Одинаковые отступы справа */
+    padding-right: 20px;
 }
 
 .team-icon {
@@ -106,7 +172,7 @@
     font-weight: 500;
 }
 
-/* Центрируем счет и статус */
+/* 🏅 Центрируем счет и статус */
 .score-section {
     display: flex;
     flex-direction: column;
@@ -121,7 +187,7 @@
     margin-bottom: 5px;
 }
 
-/* Стили статусов */
+/* 📌 Статусы матчей */
 .status {
     padding: 6px 10px;
     border-radius: 5px;
@@ -151,7 +217,7 @@
     border: 2px solid #ffc107;
 }
 
-/* Пагинация */
+/* 📌 Пагинация */
 .pagination {
     display: flex;
     justify-content: center;
@@ -176,4 +242,134 @@
 .pagination button:disabled {
     background-color: #444;
     cursor: not-allowed;
+}
+
+/* 👥 Блок с деталями команд */
+.team-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.team-info {
+    width: 48%;
+    background-color: #0b0e12;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* 🎮 Блок игроков */
+.players {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+    background-color: #1a1c22;
+    padding: 10px;
+    border-radius: 8px;
+    width: 30%;
+    min-width: 200px;
+}
+
+.player-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.kills {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+/* 📊 Блок статистики команды */
+.team-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+}
+
+/* ⬇ Анимация для раскрывающегося блока */
+.expand-icon {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    color: #ffffff99;
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+    color: #ffffff;
+}
+
+
+
+
+
+/* Фильтр статусов */
+.status-filter {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    background-color: #121418;
+    color: white;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.dropdown-arrow {
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    background-color: #121418;
+    border-radius: 8px;
+    margin-top: 5px;
+    padding: 10px 0;
+    width: 200px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #1a1c22;
 }
