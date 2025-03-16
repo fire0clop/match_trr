@@ -1,4 +1,4 @@
-import MatchTracker from './components/api/Api';
+import MatchTracker from './components/MatchTracker';
 function App() {
   return (
       <MatchTracker/>

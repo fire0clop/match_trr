@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import './MatchTracker.css';
-import refreshIcon from './Refresh.png';
-import comand_logo from './illustrations_role.png';
-import player_icon from './user-frames.png';
-import errorIcon from './Vector.png';
-
+import refreshIcon from './media/Refresh.png';
+import comand_logo from './media/illustrations_role.png';
+import player_icon from './media/user-frames.png';
+import errorIcon from './media/Vector.png';
+import company_logo from './media/Match Tracker.png';
+import expandedIcon from './media/chevron-up.png';
 const fetcher = async (url) => {
     try {
         const res = await fetch(url);
@@ -74,7 +75,7 @@ const MatchTracker = () => {
         <div className="match-tracker-container">
             <div className="match-tracker">
                 <div className="header">
-                    <h1>Match Tracker</h1>
+                    <img src={company_logo} alt="" className="company_logo"/>
 
                     {/* Фильтр статусов */}
                     <div className="status-filter">
@@ -93,10 +94,10 @@ const MatchTracker = () => {
 
                     <div className="refresh-container">
                         {errorMessage && (
-                            <span className="error-message">
-                                <img src={errorIcon} alt="Error Icon" className="error-icon" />
+                        <span className="error-message">
+                            <img src={errorIcon} alt="Error Icon" className="error-icon" />
                                 {errorMessage} Ошибка: данные не загружены
-                            </span>
+                        </span>
                         )}
                         <button className="refresh-btn" onClick={handleRefresh}>
                             <span>Обновить</span>
@@ -126,18 +127,76 @@ const MatchTracker = () => {
                                     <div className="score-section">
                                         <div className="score">{match.homeScore} : {match.awayScore}</div>
                                         <div className={statusClass}>
-                                            {match.status === 'Ongoing' ? 'Live' : match.status}
+                                            {match.status === 'Ongoing'
+                                                ? 'Live'
+                                                : match.status === 'Scheduled'
+                                                    ? 'Match preparing'
+                                                    : match.status}
                                         </div>
                                     </div>
 
                                     <div className="team team-right">
-                                        <span>{match.awayTeam.name}</span>
+                                        <span className="team-name">{match.awayTeam.name}</span>
                                         <img src={comand_logo} alt="Team Logo" className="team-icon" />
                                         <span className={`expand-icon ${expandedMatch === index ? 'expanded' : ''}`}>
-                                            ▼
+                                            <img src={expandedIcon} alt="Expand Icon" className="expand-icon-img" />
                                         </span>
                                     </div>
+
+
                                 </div>
+
+                                {/* Дополнительное меню */}
+                                {expandedMatch === index && (
+                                    <div className="match-details">
+                                        <div className="team-details">
+                                            {/* Домашняя команда */}
+                                            <div className="team-column">
+                                                {/* Блок с игроками */}
+                                                <div className="players-row">
+                                                    {match.homeTeam.players.slice(0, 3).map((player) => (
+                                                        <div key={player.username} className="player-card">
+                                                            <img src={player_icon} alt="Player Icon" className="player-icon" />
+                                                            <span className="player-username">{player.username}</span>
+                                                            <span className="player-kills">Убийств: </span> <span className="player-kills-count">{player.kills}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                {/* Блок с очками, местом и убийствами */}
+                                                <div className="stats-row">
+                                                    <div className="stats_marg"><span className="transparent_text">Points: </span><span className="player-kills-count">{match.homeTeam.points}</span></div>
+                                                    <div className="stats_marg"><span className="transparent_text">Место: </span><span className="player-kills-count">{match.homeTeam.place}</span></div>
+                                                    <div className="stats_marg"><span className="transparent_text">Всего убийств: </span><span className="player-kills-count">{match.homeTeam.total_kills}</span></div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div className="team-column">
+                                                {/* Блок с игроками */}
+                                                <div className="players-row">
+                                                    {match.awayTeam.players.slice(0, 3).map((player) => ( // Ограничиваем до 3 игроков
+                                                        <div key={player.username} className="player-card">
+                                                            <img src={player_icon} alt="Player Icon" className="player-icon" />
+                                                            <span className="player-username">{player.username}</span>
+                                                            <span className="player-kills">Убийств:</span> <span className="player-kills-count">{player.kills}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                {/* Блок с очками, местом и убийствами */}
+                                                <div className="stats-row">
+                                                    <div className="stats_marg"><span className="transparent_text">Points: </span><span className="player-kills-count">{match.awayTeam.points}</span></div>
+                                                    <div className="stats_marg"><span className="transparent_text">Место: </span><span className="player-kills-count">{match.awayTeam.place}</span></div>
+                                                    <div className="stats_marg"><span className="transparent_text">Всего убийств: </span><span className="player-kills-count">{match.awayTeam.total_kills}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         );
                     })}
